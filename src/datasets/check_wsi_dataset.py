@@ -1,23 +1,28 @@
 import os
 import sys
-import openslide
 import argparse
+import openslide
 import pandas as pd
+import json
+import csv
+import yaml
+import shutil
 
+# Add project root to sys.path
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 sys.path.append(PROJECT_ROOT)
-  
+
+def load_config(config_file):
+    with open(config_file, 'r') as f:
+        config = yaml.safe_load(f)
+    return config
 
 def process_classification_report(cls_path, report_dir, output_csv_path):
-    import json
-    import csv
-    import os
-
     # Load classification JSON
     with open(cls_path) as f:
         data = json.load(f)
 
-    # Prepare output
+    # Write combined CSV with image, label, and caption
     with open(output_csv_path, mode="w", newline="") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(["image", "label", "caption"])
@@ -53,49 +58,47 @@ def get_wsi_shape(wsi_path):
         print(f"Number of levels: {slide.level_count}")
         return width, height
     except Exception as e:
-        print(f"Error reading {wsi_path}: {e}")
+        print(f"[ERROR] Failed to read WSI {wsi_path}: {e}")
         return None
-    
-def load_config(config_file):
-    import yaml
-    with open(config_file, 'r') as f:
-        config = yaml.safe_load(f)
-    return config 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset_name", default='tcga-brca', type=str)
+    parser.add_argument("--dataset_name", default="tcga-brca", type=str)
     args = parser.parse_args()
 
-    # Load dataset configuration
-    config = load_config(f"./configs/data/{args.dataset_name}.yaml")
+    # Load configuration
+    config_path = f"./configs/data/{args.dataset_name}.yaml"
+    config = load_config(config_path)
+
     wsi_dir = config["WSI_DIR"]
-    classification_path = config["CLASSIFICATION_PATH"]  # JSON input
-    report_dir = config["REPORT_DIR"]                    # report dir 
-    csv_label_path = config["CSV_LABEL_PATH"]            # Output CSV
+    classification_path = config["CLASSIFICATION_PATH"]
+    report_dir = config["REPORT_DIR"]
+    csv_label_path = config["CSV_LABEL_PATH"]
 
-    # Generate classification CSV if missing
-    if os.path.exists(csv_label_path): 
-        import shutil 
-        shutil.rmtree(csv_label_path, ignore_errors=True) 
+    # Remove existing label CSV if it exists
+    if os.path.exists(csv_label_path):
+        print(f"[INFO] Removing old CSV at {csv_label_path}")
+        os.remove(csv_label_path)
 
-    # if not os.path.exists(csv_label_path):
+    # Generate new CSV
     process_classification_report(classification_path, report_dir, csv_label_path)
- 
-    # Load CSV into a DataFrame
-    df_labels = pd.read_csv(csv_label_path)
-    print(df_labels.head())
-    print("\n[INFO] Unique primary_diagnosis labels:")
-    print(df_labels["primary_diagnosis"].dropna().unique())
-    print("\n[INFO] Number of unique primary_diagnosis labels:") 
-    print(len(df_labels["primary_diagnosis"].dropna().unique()))
 
-    # Print shape for one WSI file
+    # Load CSV into DataFrame
+    df_labels = pd.read_csv(csv_label_path)
+    print("\n[INFO] Sample rows:")
+    print(df_labels.head())
+
+    # Print unique labels
+    print("\n[INFO] Unique diagnosis labels:")
+    print(df_labels["label"].dropna().unique())
+    print(f"[INFO] Total number of unique labels: {df_labels['label'].nunique()}")
+
+    # Print shape info for one WSI
     for filename in os.listdir(wsi_dir):
         if filename.endswith((".svs", ".tif", ".tiff")):
             full_path = os.path.join(wsi_dir, filename)
             get_wsi_shape(full_path)
-            break  # Only inspect one WSI for now
+            break
 
     return df_labels
 
