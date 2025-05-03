@@ -38,12 +38,12 @@ def get_wsi_shape(wsi_path):
     except Exception as e:
         print(f"Error reading {wsi_path}: {e}")
         return None
-
+    
 def load_config(config_file):
-    import json
+    import yaml
     with open(config_file, 'r') as f:
-        config = json.load(f)
-    return config
+        config = yaml.safe_load(f)
+    return config 
 
 def main():
     parser = argparse.ArgumentParser()
