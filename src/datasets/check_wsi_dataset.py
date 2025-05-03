@@ -92,7 +92,16 @@ def main():
     print("\n[INFO] Unique diagnosis labels:")
     print(df_labels["label"].dropna().unique())
     print(f"[INFO] Total number of unique labels: {df_labels['label'].nunique()}")
+     # Count available vs. missing captions
+    num_total = len(df_labels)
+    num_available = df_labels["caption"].notna() & df_labels["caption"].str.strip().astype(bool)
+    num_available = num_available.sum()
+    num_missing = num_total - num_available
 
+    print(f"\n[INFO] Captions summary:")
+    print(f"  Available reports : {num_available}")
+    print(f"  Missing reports   : {num_missing}") 
+    
     # Print shape info for one WSI
     for filename in os.listdir(wsi_dir):
         if filename.endswith((".svs", ".tif", ".tiff")):
