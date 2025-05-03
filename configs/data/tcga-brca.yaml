@@ -1,4 +1,4 @@
 WSI_DIR: /project/hnguyen2/hqvo3/Datasets/digital_pathology/public/TCGA-BRCA
 REPORT_DIR: /project/hnguyen2/mvu9/datasets/PathText/TCGA-BRCA
-CLASSIFICATION_PATH: /project/hnguyen2/mvu9/datasets/TCGA-class-labels/clinical.project-tcga-brca.2025-05-03.jso
+CLASSIFICATION_PATH: /project/hnguyen2/mvu9/datasets/TCGA-class-labels/clinical.project-tcga-brca.2025-05-03.json
 CSV_LABEL_PATH: /project/hnguyen2/mvu9/datasets/TCGA-class-labels/tcga-brca-case-labels.csv
