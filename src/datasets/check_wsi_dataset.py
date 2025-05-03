@@ -65,7 +65,8 @@ def main():
     print(df_labels.head())
     print("\n[INFO] Unique primary_diagnosis labels:")
     print(df_labels["primary_diagnosis"].dropna().unique())
- 
+    print("\n[INFO] Number of unique primary_diagnosis labels:") 
+    print(len(df_labels["primary_diagnosis"].dropna().unique()))
 
     # Print shape for one WSI file
     for filename in os.listdir(wsi_dir):
