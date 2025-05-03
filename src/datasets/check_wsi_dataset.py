@@ -1,8 +1,12 @@
 import os
+import sys
 import openslide
 import argparse
 import pandas as pd
 
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+sys.path.append(PROJECT_ROOT)
+  
 def process_classification_report(report_path, output_csv_path):
     import json
     import csv

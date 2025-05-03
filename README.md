@@ -1,4 +1,11 @@
 # describe-patholog
+```
+export PROJECT_DIR =$(pwd)
+```
+
+
+
+
 Datasets: 
 DataPath: contain report level (caption and raw pdf report of the dataset in TCGA)
 already download: 
