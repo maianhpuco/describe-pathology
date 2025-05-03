@@ -33,7 +33,7 @@ def process_classification_report(cls_path, report_dir, output_csv_path):
             label = diagnoses[0].get("primary_diagnosis", "N/A") if diagnoses else "N/A"
 
             # Load caption from plain text file
-            annotation_path = os.path.join(report_dir, case_id, "annotations")
+            annotation_path = os.path.join(report_dir, case_id, "annotation")
             if os.path.exists(annotation_path):
                 try:
                     with open(annotation_path, "r") as f:
