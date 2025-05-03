@@ -61,10 +61,6 @@ def get_wsi_shape(wsi_path):
         print(f"[ERROR] Failed to read WSI {wsi_path}: {e}")
         return None
 
-
-
-
-
 def rescale_and_save_random_wsi(wsi_dir, save_dir, max_size=1024, num_samples=10):
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
@@ -113,7 +109,7 @@ def main():
     classification_path = config["CLASSIFICATION_PATH"]
     report_dir = config["REPORT_DIR"]
     csv_label_path = config["CSV_LABEL_PATH"]
-    visualization_dir = config.get("VISUALIZATION_DIR")
+    visualization_dir = config["VIUSALIZATION_DIR"]
 
 
     # Remove existing label CSV if it exists
