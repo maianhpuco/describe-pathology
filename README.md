@@ -1,6 +1,6 @@
 # describe-patholog
 ```
-export PROJECT_DIR =$(pwd)
+<!-- export PROJECT_DIR =$(pwd) -->
 ```
 
 
