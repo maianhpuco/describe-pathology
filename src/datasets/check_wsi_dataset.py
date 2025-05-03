@@ -51,7 +51,7 @@ def main():
     args = parser.parse_args()
 
     # Load dataset configuration
-    config = load_config(f"./configs/data/{args.dataset_name}.json")
+    config = load_config(f"./configs/data/{args.dataset_name}.yaml")
     wsi_dir = config["WSI_DIR"]
     classification_path = config["CLASSIFICATION_PATH"]  # JSON input
     csv_label_path = config["CSV_LABEL_PATH"]            # Output CSV
