@@ -76,12 +76,13 @@ def main():
     csv_label_path = config["CSV_LABEL_PATH"]
 
     # Remove existing label CSV if it exists
-    if os.path.exists(csv_label_path):
-        print(f"[INFO] Removing old CSV at {csv_label_path}")
-        os.remove(csv_label_path)
+    # if os.path.exists(csv_label_path):
+    #     print(f"[INFO] Removing old CSV at {csv_label_path}")
+    #     os.remove(csv_label_path)
 
     # Generate new CSV
-    process_classification_report(classification_path, report_dir, csv_label_path)
+    if not os.path.exists(csv_label_path):
+        process_classification_report(classification_path, report_dir, csv_label_path)
 
     # Load CSV into DataFrame
     df_labels = pd.read_csv(csv_label_path)
