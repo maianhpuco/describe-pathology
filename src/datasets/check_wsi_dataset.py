@@ -27,13 +27,12 @@ def process_classification_report(cls_path, report_dir, output_csv_path):
             diagnoses = case.get("diagnoses", [])
             label = diagnoses[0].get("primary_diagnosis", "N/A") if diagnoses else "N/A"
 
-            # Load caption
-            annotation_path = os.path.join(report_dir, case_id, "annotations.json")
+            # Load caption from plain text file
+            annotation_path = os.path.join(report_dir, case_id, "annotations")
             if os.path.exists(annotation_path):
                 try:
                     with open(annotation_path, "r") as f:
-                        ann = json.load(f)
-                        caption = ann.get("caption", "")  # Adjust key if needed
+                        caption = f.read().strip()
                 except Exception as e:
                     print(f"[WARN] Could not read caption for {case_id}: {e}")
                     caption = ""
@@ -44,7 +43,7 @@ def process_classification_report(cls_path, report_dir, output_csv_path):
             writer.writerow([case_id, label, caption])
 
     print(f"[INFO] Wrote combined CSV to: {output_csv_path}")
- 
+
 def get_wsi_shape(wsi_path):
     try:
         slide = openslide.OpenSlide(wsi_path)
