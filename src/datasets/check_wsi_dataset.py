@@ -79,9 +79,9 @@ def main():
     if os.path.exists(csv_label_path): 
         import shutil 
         shutil.rmtree(csv_label_path, ignore_errors=True) 
-    else: 
+
     # if not os.path.exists(csv_label_path):
-        process_classification_report(classification_path, report_dir, csv_label_path)
+    process_classification_report(classification_path, report_dir, csv_label_path)
  
     # Load CSV into a DataFrame
     df_labels = pd.read_csv(csv_label_path)
