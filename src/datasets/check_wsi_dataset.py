@@ -7,26 +7,44 @@ import pandas as pd
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 sys.path.append(PROJECT_ROOT)
   
-def process_classification_report(report_path, output_csv_path):
+
+def process_classification_report(cls_path, report_dir, output_csv_path):
     import json
     import csv
+    import os
 
-    with open(report_path) as f:
+    # Load classification JSON
+    with open(cls_path) as f:
         data = json.load(f)
 
+    # Prepare output
     with open(output_csv_path, mode="w", newline="") as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(["case_id", "primary_diagnosis"])
+        writer.writerow(["image", "label", "caption"])
 
         for case in data:
             case_id = case.get("submitter_id")
             diagnoses = case.get("diagnoses", [])
-            if diagnoses:
-                diagnosis = diagnoses[0].get("primary_diagnosis", "N/A")
-                writer.writerow([case_id, diagnosis])
+            label = diagnoses[0].get("primary_diagnosis", "N/A") if diagnoses else "N/A"
 
-    print(f"[INFO] Wrote label CSV to: {output_csv_path}")
+            # Load caption
+            annotation_path = os.path.join(report_dir, case_id, "annotations.json")
+            if os.path.exists(annotation_path):
+                try:
+                    with open(annotation_path, "r") as f:
+                        ann = json.load(f)
+                        caption = ann.get("caption", "")  # Adjust key if needed
+                except Exception as e:
+                    print(f"[WARN] Could not read caption for {case_id}: {e}")
+                    caption = ""
+            else:
+                print(f"[WARN] Annotation not found for {case_id}")
+                caption = ""
 
+            writer.writerow([case_id, label, caption])
+
+    print(f"[INFO] Wrote combined CSV to: {output_csv_path}")
+ 
 def get_wsi_shape(wsi_path):
     try:
         slide = openslide.OpenSlide(wsi_path)
@@ -54,12 +72,17 @@ def main():
     config = load_config(f"./configs/data/{args.dataset_name}.yaml")
     wsi_dir = config["WSI_DIR"]
     classification_path = config["CLASSIFICATION_PATH"]  # JSON input
+    report_dir = config["REPORT_DIR"]                    # report dir 
     csv_label_path = config["CSV_LABEL_PATH"]            # Output CSV
 
     # Generate classification CSV if missing
-    if not os.path.exists(csv_label_path):
-        process_classification_report(classification_path, csv_label_path)
-
+    if os.path.exists(csv_label_path): 
+        import shutil 
+        shutil.rmtree(csv_label_path, ignore_errors=True) 
+    else: 
+    # if not os.path.exists(csv_label_path):
+        process_classification_report(classification_path, report_dir, csv_label_path)
+ 
     # Load CSV into a DataFrame
     df_labels = pd.read_csv(csv_label_path)
     print(df_labels.head())
