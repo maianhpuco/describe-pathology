@@ -37,3 +37,28 @@ TCGA-NSCLC : Non-Small Cell Lung Cancer (LUAD, LUSC)
 ## Classification label download: 
 - https://portal.gdc.cancer.gov/projects/TCGA-BRCA -> click on Clinical 
 
+
+
+## TCGA-BRCA SUMMARY:
+[INFO] Unique diagnosis labels:
+['Infiltrating duct carcinoma, NOS' 'Adenoid cystic carcinoma'
+ 'Apocrine adenocarcinoma' 'Intraductal carcinoma, noninfiltrating, NOS'
+ 'Not Reported' 'Lobular carcinoma, NOS'
+ 'Infiltrating duct and lobular carcinoma'
+ 'Infiltrating duct mixed with other types of carcinoma'
+ 'Infiltrating lobular mixed with other types of carcinoma'
+ 'Intraductal papillary adenocarcinoma with invasion' 'Carcinoma, NOS'
+ 'Invasive micropapillary carcinoma' 'Tubular adenocarcinoma'
+ 'Cribriform carcinoma, NOS' 'Clear cell carcinoma'
+ 'Metaplastic carcinoma, NOS' 'Medullary carcinoma, NOS'
+ 'Mucinous adenocarcinoma' 'Pleomorphic carcinoma'
+ 'Lobular carcinoma in situ, NOS'
+ 'Paget disease and infiltrating duct carcinoma of breast'
+ 'Adenocarcinoma, NOS' 'Phyllodes tumor, malignant'
+ 'Papillary carcinoma, NOS' 'Large cell neuroendocrine carcinoma'
+ 'Basal cell carcinoma, NOS' 'Myelodysplastic syndrome, NOS']
+[INFO] Total number of unique labels: 27
+
+[INFO] Captions summary:
+  Available reports : 1061
+  Missing reports   : 37  

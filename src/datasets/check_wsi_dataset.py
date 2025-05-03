@@ -102,6 +102,16 @@ def main():
     print(f"\n[INFO] Captions summary:")
     print(f"  Available reports : {num_available}")
     print(f"  Missing reports   : {num_missing}") 
+    wsi_extensions = (".svs", ".tif", ".tiff")
+    wsi_files = [f for f in os.listdir(wsi_dir) if f.endswith(wsi_extensions)]
+    num_wsi = len(wsi_files)
+
+    # Number of classification entries
+    num_classified = len(df_labels)
+
+    print(f"\n[INFO] WSI & Classification Summary:")
+    print(f"  WSI files found        : {num_wsi}")
+    print(f"  Classification entries : {num_classified}") 
     
     # Print shape info for one WSI
     for filename in os.listdir(wsi_dir):
