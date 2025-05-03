@@ -40,6 +40,16 @@ TCGA-NSCLC : Non-Small Cell Lung Cancer (LUAD, LUSC)
 
 
 ## TCGA-BRCA SUMMARY:
+[INFO] Sample rows:
+          image  ...                                            caption
+0  TCGA-E2-A1IU  ...  "The pathological slide indicates that the pat...
+1  TCGA-A1-A0SB  ...  "The pathological slide indicates that the pat...
+2  TCGA-A2-A04W  ...  "Pathological Report for Patient: \n\n- The pa...
+3  TCGA-AN-A0AM  ...  "This is the pathological slide of a female pa...
+4  TCGA-LL-A440  ...  "Summary:\n\nThe patient is a 62-year-old fema...
+
+[5 rows x 3 columns]
+
 [INFO] Unique diagnosis labels:
 ['Infiltrating duct carcinoma, NOS' 'Adenoid cystic carcinoma'
  'Apocrine adenocarcinoma' 'Intraductal carcinoma, noninfiltrating, NOS'
@@ -61,4 +71,11 @@ TCGA-NSCLC : Non-Small Cell Lung Cancer (LUAD, LUSC)
 
 [INFO] Captions summary:
   Available reports : 1061
-  Missing reports   : 37  
+  Missing reports   : 37
+
+[INFO] WSI & Classification Summary:
+  WSI files found        : 1133
+  Classification entries : 1098
+WSI file: TCGA-3C-AALI-01Z-00-DX1.F6E9A5DF-D8FB-45CF-B4BD-C6B76294C291.svs
+Dimensions (Width x Height): 101184 x 74432
+Number of levels: 4 
