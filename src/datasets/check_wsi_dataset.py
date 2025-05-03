@@ -63,6 +63,9 @@ def main():
     # Load CSV into a DataFrame
     df_labels = pd.read_csv(csv_label_path)
     print(df_labels.head())
+    print("\n[INFO] Unique primary_diagnosis labels:")
+    print(df_labels["primary_diagnosis"].dropna().unique())
+ 
 
     # Print shape for one WSI file
     for filename in os.listdir(wsi_dir):
